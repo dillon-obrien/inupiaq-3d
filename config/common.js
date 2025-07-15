@@ -11,7 +11,7 @@ module.exports = {
 		index: ['@babel/polyfill', './src/scripts/index.js'],
 	},
 	output: {
-		path: path.resolve(__root, 'dist'),
+		path: path.resolve(__root, 'public'),
 		filename: 'scripts/[name].[chunkhash].js',
 		chunkFilename: 'scripts/[name].[chunkhash].js',
 	},
@@ -59,7 +59,7 @@ module.exports = {
 	},
 	plugins: [
 		new CleanWebpackPlugin(
-			['dist'],
+			['public'],
 			{ root: __root },
 		),
 		new CopyWebpackPlugin([
