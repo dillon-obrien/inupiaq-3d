@@ -11,12 +11,10 @@ export default class WebGLView {
 	constructor(app) {
 		this.app = app;
 
+		// Add more entries here to cycle through them by clicking.
+		// Each file must exist under static/images/.
 		this.samples = [
 			'images/sample-01.png',
-			'images/sample-02.png',
-			'images/sample-03.png',
-			'images/sample-04.png',
-			'images/sample-05.png',
 		];
 
 		this.initThree();

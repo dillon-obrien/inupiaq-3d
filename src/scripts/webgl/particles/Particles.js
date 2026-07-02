@@ -28,6 +28,8 @@ export default class Particles {
 			this.initTouch();
 			this.resize();
 			this.show();
+		}, undefined, (err) => {
+			console.error(`Particles: failed to load texture "${src}"`, err);
 		});
 	}
 

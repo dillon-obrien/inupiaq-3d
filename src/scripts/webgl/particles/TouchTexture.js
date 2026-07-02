@@ -29,16 +29,16 @@ export default class TouchTexture {
 	update(delta) {
 		this.clear();
 
-		// age points
-		this.trail.forEach((point, i) => {
-			point.age++;
-			// remove old
-			if (point.age > this.maxAge) {
+		// age points and drop expired ones
+		// (iterate backwards so splicing doesn't skip the next element)
+		for (let i = this.trail.length - 1; i >= 0; i--) {
+			this.trail[i].age++;
+			if (this.trail[i].age > this.maxAge) {
 				this.trail.splice(i, 1);
 			}
-		});
+		}
 
-		this.trail.forEach((point, i) => {
+		this.trail.forEach((point) => {
 			this.drawTouch(point);
 		});
 
