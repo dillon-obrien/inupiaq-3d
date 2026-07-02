@@ -12,7 +12,9 @@ family, a hunter in his qajaq, umiaq crews on the whale hunt, and finally
 aġviq, the bowhead whale that feeds the village. Over the top, the piece cycles
 slowly through the **Iñupiat Ilitqusiat** — the cultural values articulated by
 Iñupiaq elders (originally in Kotzebue, Alaska): respect for elders, sharing,
-cooperation, respect for nature, humility, and more.
+cooperation, respect for nature, humility, and more. The values are matched to
+each image, so the words and the picture tell the same story — the family frame
+speaks of kinship and children; the whale, of sharing and respect for nature.
 
 The value names and short glosses are respectful paraphrases of the commonly
 published Iñupiat Ilitqusiat; the Iñupiaq words used in the interface

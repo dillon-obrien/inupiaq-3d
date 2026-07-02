@@ -6,35 +6,54 @@
  * by Iñupiaq elders (originally in Kotzebue, Alaska) that define the Iñupiat
  * way of life. The glosses below are short, respectful paraphrases of their
  * commonly published meanings.
+ *
+ * The values are synced to the images: each frame surfaces the values that
+ * belong to it, so the words and the picture tell the same story.
  */
 
-const VALUES = [
-	{ name: 'Respect for Elders', gloss: 'We honour those who carry the knowledge of generations.' },
-	{ name: 'Sharing', gloss: 'What the land gives, we share with the whole community.' },
-	{ name: 'Cooperation', gloss: 'We work together; survival on the ice is never a solo act.' },
-	{ name: 'Respect for Nature', gloss: 'The land, the sea, and the animals are relatives, not resources.' },
-	{ name: 'Humility', gloss: 'We carry our skills quietly and let our actions speak.' },
-	{ name: 'Love for Children', gloss: 'Our children are the future we are always working toward.' },
-	{ name: 'Hard Work', gloss: 'Steady effort feeds the family and strengthens the community.' },
-	{ name: 'Humor', gloss: 'Laughter keeps us warm through the longest nights.' },
-	{ name: "Hunter's Success", gloss: 'A good hunter provides, and shares the catch with all.' },
-	{ name: 'Knowledge of Family Tree', gloss: 'We know who we are by knowing where we come from.' },
-	{ name: 'Avoidance of Conflict', gloss: 'We keep the peace so the community stays whole.' },
-	{ name: 'Responsibility to Tribe', gloss: 'Each of us answers to all of the others.' },
-	{ name: 'Spirituality', gloss: 'We live with respect for the spirit in all things.' },
-	{ name: 'Family & Kinship', gloss: 'Kinship binds us across generations and villages.' },
-	{ name: 'Knowledge of Language', gloss: 'Iñupiaq carries the worldview of our people.' },
-	{ name: 'Compassion', gloss: 'We care for one another, especially in hardship.' },
-];
+const V = {
+	elders:     { name: 'Respect for Elders', gloss: 'We honour those who carry the knowledge of generations.' },
+	sharing:    { name: 'Sharing', gloss: 'What the land gives, we share with the whole community.' },
+	cooperation:{ name: 'Cooperation', gloss: 'We work together; survival on the ice is never a solo act.' },
+	nature:     { name: 'Respect for Nature', gloss: 'The land, the sea, and the animals are relatives, not resources.' },
+	humility:   { name: 'Humility', gloss: 'We carry our skills quietly and let our actions speak.' },
+	children:   { name: 'Love for Children', gloss: 'Our children are the future we are always working toward.' },
+	hardWork:   { name: 'Hard Work', gloss: 'Steady effort feeds the family and strengthens the community.' },
+	humor:      { name: 'Humor', gloss: 'Laughter keeps us warm through the longest nights.' },
+	hunter:     { name: "Hunter's Success", gloss: 'A good hunter provides, and shares the catch with all.' },
+	familyTree: { name: 'Knowledge of Family Tree', gloss: 'We know who we are by knowing where we come from.' },
+	conflict:   { name: 'Avoidance of Conflict', gloss: 'We keep the peace so the community stays whole.' },
+	tribe:      { name: 'Responsibility to Tribe', gloss: 'Each of us answers to all of the others.' },
+	spirit:     { name: 'Spirituality', gloss: 'We live with respect for the spirit in all things.' },
+	family:     { name: 'Family & Kinship', gloss: 'Kinship binds us across generations and villages.' },
+	language:   { name: 'Knowledge of Language', gloss: 'Iñupiaq carries the worldview of our people.' },
+	compassion: { name: 'Compassion', gloss: 'We care for one another, especially in hardship.' },
+};
 
-// One caption per image — keep in sync with `samples` in
-// src/scripts/webgl/WebGLView.js. Aġviq (the bowhead whale), umiaq (the open
-// skin boat) and qajaq (kayak) are well-documented Iñupiaq terms.
-const CAPTIONS = [
-	'An Iñupiat family — Noatak, Alaska, c. 1929',
-	'A hunter in his qajaq — Noatak, Alaska, c. 1929',
-	'Umiaq crews on the whale hunt — Bering Strait, c. 1906',
-	'Aġviq, the bowhead — the whale that feeds the village',
+// One frame per image — caption + the values that belong to it. Keep aligned
+// with `samples` in src/scripts/webgl/WebGLView.js. Aġviq (the bowhead whale),
+// umiaq (the open skin boat) and qajaq (kayak) are well-documented Iñupiaq terms.
+const FRAMES = [
+	{
+		// the family
+		caption: 'An Iñupiat family — Noatak, Alaska, c. 1929',
+		values: [V.family, V.children, V.familyTree, V.language],
+	},
+	{
+		// the lone hunter in his qajaq
+		caption: 'A hunter in his qajaq — Noatak, Alaska, c. 1929',
+		values: [V.hunter, V.hardWork, V.humility, V.spirit],
+	},
+	{
+		// the umiaq crews working as one on the hunt
+		caption: 'Umiaq crews on the whale hunt — Bering Strait, c. 1906',
+		values: [V.cooperation, V.tribe, V.conflict, V.elders],
+	},
+	{
+		// aġviq, the whale, shared with the whole village at the feast
+		caption: 'Aġviq, the bowhead — the whale that feeds the village',
+		values: [V.sharing, V.nature, V.compassion, V.humor],
+	},
 ];
 
 const INTRO_HOLD = 2600;   // how long the greeting lingers
@@ -53,7 +72,10 @@ export default class Overlay {
 		this.valueGloss = document.getElementById('value-gloss');
 		this.caption = document.getElementById('caption');
 
-		this.index = 0;
+		this.imageIndex = 0;   // which frame (image) is showing
+		this.valueIndex = 0;   // position within that frame's value set
+		this.started = false;  // has the value rotation begun?
+		this.rotationTimer = null;
 		this.timers = [];
 
 		// respect users who prefer reduced motion: skip the intro choreography
@@ -67,8 +89,7 @@ export default class Overlay {
 		if (this.reducedMotion) {
 			this._reveal(this.head);
 			this._reveal(this.foot);
-			this._showValue(this.index);
-			this._every(VALUE_HOLD, () => this._advance());
+			this._beginRotation();
 			return;
 		}
 
@@ -81,20 +102,70 @@ export default class Overlay {
 			if (this.intro) this.intro.style.display = 'none';
 			this._reveal(this.head);
 			this._reveal(this.foot);
-			this._showValue(this.index);
-			this._every(VALUE_HOLD, () => this._advance());
+			this._beginRotation();
 		});
 	}
 
 	/**
-	 * Cross-fade the image caption. Safe to call before start() — the text is
-	 * set immediately and revealed with the footer.
+	 * Switch to a frame: cross-fade its caption and, once the rotation is
+	 * running, cross-fade the values over to that frame's set. Safe to call
+	 * before start() — it just records the frame for when the rotation begins.
 	 */
-	setCaption(index) {
-		if (!this.caption) return;
-		const text = CAPTIONS[index] || '';
+	setImage(index) {
+		if (index == null || index < 0 || index >= FRAMES.length) return;
+		this.imageIndex = index;
+		this._setCaption(FRAMES[index].caption);
 
-		// not on screen yet: just set the text, the footer reveal shows it
+		if (!this.started) return;
+
+		// fade the current value out, then restart the rotation on the new set
+		this.valueText.classList.remove('is-visible');
+		this.valueGloss.classList.remove('is-visible');
+		this._after(VALUE_FADE, () => this._beginRotation());
+	}
+
+	// ---------------------------------------------------------------------------
+
+	_beginRotation() {
+		this.started = true;
+		this._clearRotation();
+		this.valueIndex = 0;
+		this._showValue();
+		this.rotationTimer = setInterval(() => this._advance(), VALUE_HOLD);
+	}
+
+	_advance() {
+		// fade current out, swap text, fade next value in (within this frame)
+		this.valueText.classList.remove('is-visible');
+		this.valueGloss.classList.remove('is-visible');
+
+		this._after(VALUE_FADE, () => {
+			const values = this._currentValues();
+			this.valueIndex = (this.valueIndex + 1) % values.length;
+			this._showValue();
+		});
+	}
+
+	_showValue() {
+		const value = this._currentValues()[this.valueIndex];
+		if (!value) return;
+		this.valueText.textContent = value.name;
+		this.valueGloss.textContent = value.gloss;
+		// next frame so the transition plays
+		requestAnimationFrame(() => {
+			this.valueText.classList.add('is-visible');
+			this.valueGloss.classList.add('is-visible');
+		});
+	}
+
+	_currentValues() {
+		return (FRAMES[this.imageIndex] || FRAMES[0]).values;
+	}
+
+	_setCaption(text) {
+		if (!this.caption) return;
+
+		// not on screen yet: set text, the footer reveal shows it
 		if (!this.caption.classList.contains('is-visible')) {
 			this.caption.textContent = text;
 			this.caption.classList.add('is-visible');
@@ -108,30 +179,6 @@ export default class Overlay {
 		});
 	}
 
-	// ---------------------------------------------------------------------------
-
-	_advance() {
-		// fade current out, swap text, fade next in
-		this.valueText.classList.remove('is-visible');
-		this.valueGloss.classList.remove('is-visible');
-
-		this._after(VALUE_FADE, () => {
-			this.index = (this.index + 1) % VALUES.length;
-			this._showValue(this.index);
-		});
-	}
-
-	_showValue(i) {
-		const value = VALUES[i];
-		this.valueText.textContent = value.name;
-		this.valueGloss.textContent = value.gloss;
-		// next frame so the transition plays
-		requestAnimationFrame(() => {
-			this.valueText.classList.add('is-visible');
-			this.valueGloss.classList.add('is-visible');
-		});
-	}
-
 	_reveal(el) {
 		if (el) el.classList.add('is-visible');
 	}
@@ -140,11 +187,15 @@ export default class Overlay {
 		this.timers.push(setTimeout(fn, ms));
 	}
 
-	_every(ms, fn) {
-		this.timers.push(setInterval(fn, ms));
+	_clearRotation() {
+		if (this.rotationTimer) {
+			clearInterval(this.rotationTimer);
+			this.rotationTimer = null;
+		}
 	}
 
 	destroy() {
+		this._clearRotation();
 		this.timers.forEach((t) => { clearTimeout(t); clearInterval(t); });
 		this.timers = [];
 	}

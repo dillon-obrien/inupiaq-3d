@@ -30,9 +30,9 @@ export default class App {
 		this.overlay = new Overlay();
 		this.overlay.start();
 
-		// webgl initialises first, so set the caption for the opening image
+		// webgl initialises first, so point the overlay at the opening image
 		if (this.webgl && this.webgl.currSample != null) {
-			this.overlay.setCaption(this.webgl.currSample);
+			this.overlay.setImage(this.webgl.currSample);
 		}
 	}
 

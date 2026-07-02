@@ -82,8 +82,8 @@ export default class WebGLView {
 
 		this.currSample = index;
 
-		// let the overlay caption follow the image
-		if (this.app.overlay) this.app.overlay.setCaption(index);
+		// let the overlay caption and values follow the image
+		if (this.app.overlay) this.app.overlay.setImage(index);
 	}
 
 	next() {
