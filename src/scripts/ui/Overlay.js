@@ -27,10 +27,21 @@ const VALUES = [
 	{ name: 'Compassion', gloss: 'We care for one another, especially in hardship.' },
 ];
 
+// One caption per image — keep in sync with `samples` in
+// src/scripts/webgl/WebGLView.js. Aġviq (the bowhead whale), umiaq (the open
+// skin boat) and qajaq (kayak) are well-documented Iñupiaq terms.
+const CAPTIONS = [
+	'An Iñupiat family — Noatak, Alaska, c. 1929',
+	'A hunter in his qajaq — Noatak, Alaska, c. 1929',
+	'Umiaq crews on the whale hunt — Bering Strait, c. 1906',
+	'Aġviq, the bowhead — the whale that feeds the village',
+];
+
 const INTRO_HOLD = 2600;   // how long the greeting lingers
 const INTRO_FADE = 1200;   // greeting fade-out duration
 const VALUE_HOLD = 5200;   // how long each value stays on screen
 const VALUE_FADE = 900;    // per-value cross-fade duration
+const CAPTION_FADE = 500;  // caption cross-fade duration
 
 export default class Overlay {
 
@@ -40,6 +51,7 @@ export default class Overlay {
 		this.foot = document.getElementById('foot');
 		this.valueText = document.getElementById('value-text');
 		this.valueGloss = document.getElementById('value-gloss');
+		this.caption = document.getElementById('caption');
 
 		this.index = 0;
 		this.timers = [];
@@ -71,6 +83,28 @@ export default class Overlay {
 			this._reveal(this.foot);
 			this._showValue(this.index);
 			this._every(VALUE_HOLD, () => this._advance());
+		});
+	}
+
+	/**
+	 * Cross-fade the image caption. Safe to call before start() — the text is
+	 * set immediately and revealed with the footer.
+	 */
+	setCaption(index) {
+		if (!this.caption) return;
+		const text = CAPTIONS[index] || '';
+
+		// not on screen yet: just set the text, the footer reveal shows it
+		if (!this.caption.classList.contains('is-visible')) {
+			this.caption.textContent = text;
+			this.caption.classList.add('is-visible');
+			return;
+		}
+
+		this.caption.classList.remove('is-visible');
+		this._after(CAPTION_FADE, () => {
+			this.caption.textContent = text;
+			this.caption.classList.add('is-visible');
 		});
 	}
 

@@ -29,6 +29,11 @@ export default class App {
 	initOverlay() {
 		this.overlay = new Overlay();
 		this.overlay.start();
+
+		// webgl initialises first, so set the caption for the opening image
+		if (this.webgl && this.webgl.currSample != null) {
+			this.overlay.setCaption(this.webgl.currSample);
+		}
 	}
 
 	addListeners() {

@@ -22,7 +22,8 @@ export default class GUIView {
 		this.initControlKit();
 		// this.initStats();
 
-		// this.disable();
+		// start hidden for a clean first impression — press G to toggle
+		this.disable();
 	}
 
 	initControlKit() {

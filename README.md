@@ -3,14 +3,16 @@
 *The values that make us who we are.*
 
 An interactive WebGL piece built with [Three.js](https://threejs.org/) in honour
-of the Iñupiat of Arctic Alaska. A portrait of an Iñupiaq hunter is sampled
-pixel-by-pixel and rendered as a cloud of instanced particles, coloured like the
-aurora (*kiuġuyat*) and drifting over a dark Arctic sky. Move the pointer and the
+of the Iñupiat of Arctic Alaska. Historical photographs are sampled
+pixel-by-pixel and rendered as clouds of instanced particles, coloured like the
+aurora (*kiuġuyat*) and drifting over a dark Arctic sky. Move the pointer and a
 figure scatters like wind over the tundra; the particles then settle back into
-the picture. Over the top, the piece cycles slowly through the **Iñupiat
-Ilitqusiat** — the cultural values articulated by Iñupiaq elders (originally in
-Kotzebue, Alaska): respect for elders, sharing, cooperation, respect for nature,
-humility, and more.
+the picture. Clicking moves through a story told in four images — an Iñupiat
+family, a hunter in his qajaq, umiaq crews on the whale hunt, and finally
+aġviq, the bowhead whale that feeds the village. Over the top, the piece cycles
+slowly through the **Iñupiat Ilitqusiat** — the cultural values articulated by
+Iñupiaq elders (originally in Kotzebue, Alaska): respect for elders, sharing,
+cooperation, respect for nature, humility, and more.
 
 The value names and short glosses are respectful paraphrases of the commonly
 published Iñupiat Ilitqusiat; the Iñupiaq words used in the interface
@@ -44,8 +46,9 @@ The production bundle is emitted to `public/`.
 ## Controls
 
 - **Move the pointer** over the image to scatter the particles.
-- **Click** to reform, and to move through the images (people → subsistence → land).
-- **Press `g`** to toggle the GUI panel.
+- **Click** to move through the story: the family, the hunter, the hunt, and
+  aġviq — the bowhead whale that feeds the village.
+- **Press `g`** to toggle the GUI panel (hidden by default).
 
 ## Adding your own images
 
@@ -82,10 +85,13 @@ engine:
 - **hunter-kayak.png** — *Iñupiaq man in a qajaq, Noatak, Alaska*, Edward S.
   Curtis. Public domain.
   [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Inuit_man_by_Curtis_-_Noatak_AK.jpg)
-- **aurora.png** — *Aurora Borealis over Bear Lake, Eielson AFB, Alaska* (2005),
-  Senior Airman Joshua Strang, U.S. Air Force. Public domain (work of the U.S.
-  federal government).
-  [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Aurora_Borealis_Alaska.jpg)
+- **umiaq-hunt.png** — *Kingikmiut crews paddling umiaks during a whale hunt,
+  Bering Strait, Cape Prince of Wales* (c. 1901–1906). Public domain.
+  [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Kingikmiut_Eskimos_paddling_an_umiak,_a_boat_made_of_animal_skins,_during_a_whale_hunt,_Bering_Strait,_Cape_Prince_of_Wales_(AL+CA_2124).jpg)
+- **agviq-bowhead.png** — *Bowhead whale beside the ice edge* (2011), Vicki
+  Beaver, NOAA Fisheries / Alaska Fisheries Science Center. Public domain
+  (work of the U.S. federal government).
+  [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Bowhead_Whale_NOAA.jpg)
 
 The **Iñupiat Ilitqusiat** value names and glosses are respectful paraphrases of
 the values articulated by Iñupiaq elders; see the

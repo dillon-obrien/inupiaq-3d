@@ -180,6 +180,21 @@ body {
 	transition: opacity 1.4s ease 0.4s;
 }
 .overlay__foot.is-visible { opacity: 0.9; }
+.foot__caption {
+	margin: 0 0 0.3rem;
+	font-size: clamp(0.85rem, 2vw, 1.05rem);
+	font-weight: 300;
+	letter-spacing: 0.06em;
+	color: rgba(225, 250, 242, 0.92);
+	opacity: 0;
+	transform: translateY(6px);
+	transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.foot__caption.is-visible {
+	opacity: 1;
+	transform: none;
+}
+
 .foot__hint,
 .foot__credit {
 	margin: 0;

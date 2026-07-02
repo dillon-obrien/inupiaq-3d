@@ -12,20 +12,23 @@ export default class WebGLView {
 		this.app = app;
 
 		// Click cycles through these. Each is a public-domain image processed
-		// to a bright subject on black (see README → Credits). People, then
-		// subsistence, then land — the shape of an Iñupiaq life.
+		// to a bright subject on black (see README → Credits). The order tells
+		// a story: the family, the hunter, the hunt, and aġviq — the bowhead
+		// whale that feeds the village. Keep in sync with CAPTIONS in
+		// src/scripts/ui/Overlay.js.
 		this.samples = [
 			'images/portrait-family.png',
 			'images/hunter-kayak.png',
-			'images/aurora.png',
+			'images/umiaq-hunt.png',
+			'images/agviq-bowhead.png',
 		];
 
 		this.initThree();
 		this.initParticles();
 		this.initControls();
 
-		const rnd = ~~(Math.random() * this.samples.length);
-		this.goto(rnd);
+		// begin at the start of the story
+		this.goto(0);
 	}
 
 	initThree() {
@@ -78,6 +81,9 @@ export default class WebGLView {
 		}
 
 		this.currSample = index;
+
+		// let the overlay caption follow the image
+		if (this.app.overlay) this.app.overlay.setCaption(index);
 	}
 
 	next() {
