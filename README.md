@@ -43,9 +43,8 @@ The production bundle is emitted to `public/`.
 
 ## Controls
 
-- **Move the pointer** over the image to disturb the particles.
-- **Click** to replay the reveal animation (and to advance through samples
-  when more than one is configured).
+- **Move the pointer** over the image to scatter the particles.
+- **Click** to reform, and to move through the images (people → subsistence → land).
 - **Press `g`** to toggle the GUI panel.
 
 ## Adding your own images
@@ -71,6 +70,32 @@ side is a good starting point.
 - webpack + Babel for bundling
 - glslify for shader imports
 
+## Credits
+
+The imagery is public domain, processed to a bright subject on black (via
+background removal and level adjustment) so it renders cleanly in the particle
+engine:
+
+- **portrait-family.png** — *Iñupiat family, Noatak, Alaska* (c. 1929),
+  Edward S. Curtis. Public domain.
+  [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Inupiat_Family_from_Noatak,_Alaska,_1929,_Edward_S._Curtis_(restored).jpg)
+- **hunter-kayak.png** — *Iñupiaq man in a qajaq, Noatak, Alaska*, Edward S.
+  Curtis. Public domain.
+  [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Inuit_man_by_Curtis_-_Noatak_AK.jpg)
+- **aurora.png** — *Aurora Borealis over Bear Lake, Eielson AFB, Alaska* (2005),
+  Senior Airman Joshua Strang, U.S. Air Force. Public domain (work of the U.S.
+  federal government).
+  [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Aurora_Borealis_Alaska.jpg)
+
+The **Iñupiat Ilitqusiat** value names and glosses are respectful paraphrases of
+the values articulated by Iñupiaq elders; see the
+[Alaska Native Knowledge Network](http://www.ankn.uaf.edu/ancr/Values/inupiaq.html)
+and the [North Slope Borough School District](https://www.nsbsd.org/en-US/inupiaq-education-c8d869a3).
+Iñupiaq words used in the interface come from public language resources such as
+[Omniglot](https://www.omniglot.com/language/phrases/inupiaq.php). This project
+is an independent homage and is not affiliated with or endorsed by any Iñupiaq
+community or organization.
+
 ## License
 
-MIT
+MIT (code). The photographs above are public domain.

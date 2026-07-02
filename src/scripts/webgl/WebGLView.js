@@ -11,10 +11,13 @@ export default class WebGLView {
 	constructor(app) {
 		this.app = app;
 
-		// Add more entries here to cycle through them by clicking.
-		// Each file must exist under static/images/.
+		// Click cycles through these. Each is a public-domain image processed
+		// to a bright subject on black (see README → Credits). People, then
+		// subsistence, then land — the shape of an Iñupiaq life.
 		this.samples = [
-			'images/sample-01.png',
+			'images/portrait-family.png',
+			'images/hunter-kayak.png',
+			'images/aurora.png',
 		];
 
 		this.initThree();
