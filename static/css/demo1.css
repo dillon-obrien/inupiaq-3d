@@ -1,6 +1,197 @@
+/* ------------------------------------------------------------------ *
+ *  Iñupiat Ilitqusiat — an interactive tribute
+ *  Arctic night sky, aurora glow, and typographic overlay
+ * ------------------------------------------------------------------ */
+
 body {
-	background-color: #222;
 	margin: 0;
 	overflow: hidden;
-	cursor: pointer;
+	cursor: crosshair;
+	background-color: #03060d;
+	/* deep Arctic sky: midnight blue fading to black */
+	background-image:
+		radial-gradient(120% 80% at 50% 115%, rgba(8, 40, 46, 0.55) 0%, rgba(3, 6, 13, 0) 60%),
+		linear-gradient(180deg, #02040a 0%, #04101a 55%, #061a1e 100%);
+	color: #eaf6f2;
+	font-family: Futura, "futura-pt", "Avenir Next", Helvetica, Arial, sans-serif;
+}
+
+/* faint field of stars */
+.sky {
+	position: fixed;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	background-image:
+		radial-gradient(1px 1px at 20% 30%, rgba(255, 255, 255, 0.7), transparent),
+		radial-gradient(1px 1px at 75% 18%, rgba(255, 255, 255, 0.5), transparent),
+		radial-gradient(1px 1px at 40% 70%, rgba(255, 255, 255, 0.45), transparent),
+		radial-gradient(1px 1px at 88% 62%, rgba(255, 255, 255, 0.55), transparent),
+		radial-gradient(1px 1px at 12% 82%, rgba(255, 255, 255, 0.4), transparent),
+		radial-gradient(1.5px 1.5px at 62% 42%, rgba(255, 255, 255, 0.5), transparent),
+		radial-gradient(1px 1px at 55% 88%, rgba(255, 255, 255, 0.35), transparent),
+		radial-gradient(1px 1px at 30% 12%, rgba(255, 255, 255, 0.45), transparent);
+	background-repeat: no-repeat;
+	opacity: 0.8;
+}
+
+/* soft aurora bands drifting behind the particles */
+.aurora {
+	position: fixed;
+	left: -20%;
+	right: -20%;
+	top: -10%;
+	height: 70%;
+	z-index: 0;
+	pointer-events: none;
+	filter: blur(60px);
+	opacity: 0.5;
+	background:
+		radial-gradient(50% 60% at 30% 40%, rgba(13, 217, 140, 0.35) 0%, transparent 70%),
+		radial-gradient(45% 55% at 70% 30%, rgba(66, 200, 255, 0.28) 0%, transparent 70%),
+		radial-gradient(40% 50% at 55% 55%, rgba(160, 120, 255, 0.22) 0%, transparent 70%);
+	animation: aurora-drift 22s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift {
+	0%   { transform: translateX(-3%) translateY(0)    scaleX(1);    opacity: 0.42; }
+	50%  { transform: translateX(3%)  translateY(1.5%) scaleX(1.08); opacity: 0.58; }
+	100% { transform: translateX(-2%) translateY(-1%)  scaleX(0.96); opacity: 0.48; }
+}
+
+.container {
+	position: relative;
+	z-index: 1;
+}
+
+/* ------------------------------------------------------------------ *
+ *  Overlay
+ * ------------------------------------------------------------------ */
+
+.overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 10;
+	pointer-events: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: clamp(1.4rem, 4vw, 3.2rem);
+	text-shadow: 0 1px 24px rgba(0, 0, 0, 0.8);
+}
+
+/* opening greeting */
+.overlay__intro {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.4rem;
+	opacity: 0;
+	transition: opacity 1.2s ease;
+}
+.overlay__intro.is-visible { opacity: 1; }
+.intro__word {
+	font-size: clamp(2.4rem, 8vw, 5rem);
+	font-weight: 300;
+	letter-spacing: 0.04em;
+	color: #dffff2;
+}
+.intro__sub {
+	font-size: clamp(0.8rem, 2vw, 1rem);
+	letter-spacing: 0.42em;
+	text-transform: uppercase;
+	color: rgba(120, 230, 200, 0.85);
+	padding-left: 0.42em;
+}
+
+/* header */
+.overlay__head {
+	opacity: 0;
+	transform: translateY(-8px);
+	transition: opacity 1.4s ease, transform 1.4s ease;
+}
+.overlay__head.is-visible { opacity: 1; transform: none; }
+.head__title {
+	margin: 0;
+	font-size: clamp(1.5rem, 4.5vw, 2.6rem);
+	font-weight: 300;
+	letter-spacing: 0.06em;
+	color: #eafff8;
+}
+.head__subtitle {
+	margin: 0.35rem 0 0;
+	font-size: clamp(0.72rem, 1.7vw, 0.92rem);
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: rgba(120, 220, 195, 0.8);
+}
+
+/* rotating value */
+.overlay__value {
+	align-self: flex-start;
+	max-width: min(90vw, 46rem);
+}
+.value__label {
+	display: block;
+	font-size: 0.7rem;
+	letter-spacing: 0.36em;
+	text-transform: uppercase;
+	color: rgba(110, 200, 180, 0.65);
+	margin-bottom: 0.6rem;
+}
+.value__text {
+	display: inline-block;
+	font-size: clamp(1.8rem, 6vw, 3.6rem);
+	font-weight: 300;
+	line-height: 1.05;
+	color: #f2fffb;
+	opacity: 0;
+	transform: translateY(14px);
+	transition: opacity 0.9s ease, transform 0.9s ease;
+	background: linear-gradient(100deg, #d9fff0 0%, #7ff0cf 45%, #7fc9ff 100%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.value__text.is-visible { opacity: 1; transform: none; }
+.value__gloss {
+	display: block;
+	margin-top: 0.7rem;
+	font-size: clamp(0.82rem, 1.9vw, 1.05rem);
+	font-weight: 300;
+	letter-spacing: 0.02em;
+	color: rgba(214, 240, 232, 0.7);
+	-webkit-text-fill-color: rgba(214, 240, 232, 0.7);
+	max-width: 34rem;
+	opacity: 0;
+	transition: opacity 0.9s ease 0.15s;
+}
+.value__gloss.is-visible { opacity: 1; }
+
+/* footer */
+.overlay__foot {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+	opacity: 0;
+	transition: opacity 1.4s ease 0.4s;
+}
+.overlay__foot.is-visible { opacity: 0.9; }
+.foot__hint,
+.foot__credit {
+	margin: 0;
+	font-size: 0.72rem;
+	letter-spacing: 0.14em;
+	color: rgba(190, 220, 212, 0.6);
+}
+.foot__credit i { color: rgba(130, 230, 200, 0.85); font-style: italic; }
+.foot__hint kbd {
+	font-family: inherit;
+	border: 1px solid rgba(180, 220, 210, 0.4);
+	border-radius: 3px;
+	padding: 0 0.35em;
+	font-size: 0.9em;
 }

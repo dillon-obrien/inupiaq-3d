@@ -21,6 +21,7 @@ uniform sampler2D uTouch;
 
 varying vec2 vPUv;
 varying vec2 vUv;
+varying float vTouch;
 
 #pragma glslify: snoise2 = require(glsl-noise/simplex/2d)
 
@@ -48,8 +49,16 @@ void main() {
 	// center
 	displaced.xy -= uTextureSize * 0.5;
 
+	// ambient drift: a gentle collective sway, like an aurora curtain,
+	// so the portrait breathes even when it is not being touched
+	float driftT = uTime * 0.35;
+	displaced.x += sin(driftT + offset.y * 0.02) * 1.2;
+	displaced.y += cos(driftT * 0.8 + offset.x * 0.02) * 1.2;
+	displaced.z += sin(driftT * 0.6 + pindex) * 1.0;
+
 	// touch
 	float t = texture2D(uTouch, puv).r;
+	vTouch = t;
 	displaced.z += t * 20.0 * rndz;
 	displaced.x += cos(angle) * t * 20.0 * rndz;
 	displaced.y += sin(angle) * t * 20.0 * rndz;

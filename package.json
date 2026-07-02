@@ -15,7 +15,7 @@
   "license": "MIT",
   "sideEffects": false,
   "scripts": {
-    "build": "webpack -p --config config/prod.js",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider webpack -p --config config/prod.js",
     "start": "NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --config config/dev.js"
   },
   "dependencies": {
@@ -41,8 +41,8 @@
     "glslify-import-loader": "^0.1.2",
     "glslify-loader": "^1.0.2",
     "html-webpack-plugin": "^3.2.0",
-    "js-yaml": ">=3.13.1",
     "imports-loader": "^0.8.0",
+    "js-yaml": ">=3.13.1",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.21.0",
     "webpack": "^4.15.1",

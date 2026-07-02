@@ -3,18 +3,40 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Interactive Particles | Inupiaq</title>
-		<meta name="description" content="Demo of a tutorial on how to draw a large number of particles with Three.js and make them interactive." />
-		<meta name="keywords" content="three.js, tutorial, particles, interactive, javascript, webgl" />
+		<title>Iñupiat Ilitqusiat — The Values That Make Us Who We Are</title>
+		<meta name="description" content="An interactive tribute to the Iñupiat of Arctic Alaska: a portrait rendered in aurora-coloured particles that carries the Iñupiat Ilitqusiat — the values that make us who we are." />
+		<meta name="keywords" content="Iñupiat, Iñupiaq, Inupiat Ilitqusiat, Alaska Native, Arctic, aurora, three.js, particles, interactive, webgl" />
 		<link rel="stylesheet" type="text/css" href="css/base.css" />
 		<link rel="stylesheet" type="text/css" href="css/demo1.css" />
 		<script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("Please view this demo in a modern browser that supports CSS Variables.");</script>
 	</head>
 	<body class="demo-1">
-		<main>
-			<div class="frame">
-			</div>
-		</main>
+		<div class="sky"></div>
+		<div class="aurora"></div>
+
 		<div class="container"></div>
+
+		<div class="overlay">
+			<div class="overlay__intro" id="intro">
+				<span class="intro__word">Paġlagivsi</span>
+				<span class="intro__sub">Welcome</span>
+			</div>
+
+			<header class="overlay__head" id="head">
+				<h1 class="head__title">Iñupiat Ilitqusiat</h1>
+				<p class="head__subtitle">The values that make us who we are</p>
+			</header>
+
+			<div class="overlay__value" id="value">
+				<span class="value__label">Iñupiaq value</span>
+				<span class="value__text" id="value-text"></span>
+				<span class="value__gloss" id="value-gloss"></span>
+			</div>
+
+			<footer class="overlay__foot" id="foot">
+				<p class="foot__hint">Move to disturb &middot; Click to reform &middot; <kbd>G</kbd> for controls</p>
+				<p class="foot__credit">In honour of the Iñupiat of Arctic Alaska &middot; aurora: <i>kiuġuyat</i> &middot; Quyanaq</p>
+			</footer>
+		</div>
 	</body>
 </html>

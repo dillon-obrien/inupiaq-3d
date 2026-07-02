@@ -1,11 +1,25 @@
-# Interactive Particles
+# Iñupiat Ilitqusiat — an interactive tribute
 
-An interactive WebGL particle system built with [Three.js](https://threejs.org/).
-An image is sampled pixel-by-pixel and rendered as a cloud of instanced
-particles that scatter and react to the pointer, then settle back into the
-picture.
+*The values that make us who we are.*
 
-Based on the tutorial [Interactive Particles with Three.js](https://tympanus.net/codrops/2019/01/17/interactive-particles-with-three-js/)
+An interactive WebGL piece built with [Three.js](https://threejs.org/) in honour
+of the Iñupiat of Arctic Alaska. A portrait of an Iñupiaq hunter is sampled
+pixel-by-pixel and rendered as a cloud of instanced particles, coloured like the
+aurora (*kiuġuyat*) and drifting over a dark Arctic sky. Move the pointer and the
+figure scatters like wind over the tundra; the particles then settle back into
+the picture. Over the top, the piece cycles slowly through the **Iñupiat
+Ilitqusiat** — the cultural values articulated by Iñupiaq elders (originally in
+Kotzebue, Alaska): respect for elders, sharing, cooperation, respect for nature,
+humility, and more.
+
+The value names and short glosses are respectful paraphrases of the commonly
+published Iñupiat Ilitqusiat; the Iñupiaq words used in the interface
+(*Paġlagivsi* — welcome, *Quyanaq* — thank you, *kiuġuyat* — the northern lights)
+are drawn from public language resources. This is an homage, not an official
+publication of any community.
+
+The particle engine is based on the tutorial
+[Interactive Particles with Three.js](https://tympanus.net/codrops/2019/01/17/interactive-particles-with-three-js/)
 by Bruno Imbrizi.
 
 ## Getting started
@@ -48,6 +62,11 @@ side is a good starting point.
 ## Tech
 
 - Three.js (instanced buffer geometry + a custom GLSL shader)
+- A custom aurora colour-grade and ambient "curtain" drift in the vertex/fragment
+  shaders ([`src/shaders/`](src/shaders/))
+- A lightweight typographic overlay that opens with an Iñupiaq greeting and
+  rotates through the values ([`src/scripts/ui/Overlay.js`](src/scripts/ui/Overlay.js)),
+  with a CSS Arctic sky + drifting aurora ([`static/css/demo1.css`](static/css/demo1.css))
 - GSAP for the show/hide tweens
 - webpack + Babel for bundling
 - glslify for shader imports

@@ -1,5 +1,6 @@
 import WebGLView from './webgl/WebGLView';
 import GUIView from './gui/GUIView';
+import Overlay from './ui/Overlay';
 
 export default class App {
 
@@ -10,6 +11,7 @@ export default class App {
 	init() {
 		this.initWebGL();
 		this.initGUI();
+		this.initOverlay();
 		this.addListeners();
 		this.animate();
 		this.resize();
@@ -22,6 +24,11 @@ export default class App {
 
 	initGUI() {
 		this.gui = new GUIView(this);
+	}
+
+	initOverlay() {
+		this.overlay = new Overlay();
+		this.overlay.start();
 	}
 
 	addListeners() {
